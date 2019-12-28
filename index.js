@@ -179,7 +179,7 @@ const rulesDiscord = {
 	},
 	discordChannel: {
 		order: markdown.defaultRules.strong.order,
-		match: source => /^<#([\w]+)((?:-\w+)+)*>/.exec(source),
+		match: source => /^<#((?:[\w]+)(?:(?:-\w+)+)*)>/.exec(source),
 		parse: function(capture) {
 			return {
 				id: capture[1]
