@@ -179,7 +179,7 @@ const rulesDiscord = {
 	},
 	discordChannel: {
 		order: markdown.defaultRules.strong.order,
-		match: source => /^<#((?:[\w]+)(?:(?:-\w+)+)*)>/.exec(source),
+		match: source => /^<#((?:(?:[\w]+)(?:(?:-\w+)+)*)|[\d]*)>/.exec(source),
 		parse: function(capture) {
 			return {
 				id: capture[1]
@@ -199,6 +199,18 @@ const rulesDiscord = {
 		},
 		html: function(node, output, state) {
 			return htmlTag('span', discordCallback.role(node), { class: 'd-mention d-role' }, state);
+		}
+	},
+	standardDiscordRole: {
+		order: markdown.defaultRules.strong.order,
+		match: source => /^<@&([\d]*)>/.exec(source),
+		parse: function(capture) {
+			return {
+				id: capture[1]
+			};
+		},
+		html: function(node, output, state) {
+			return htmlTag('span', discordCallback.standardRole(node), { class: 'd-mention d-role' }, state);
 		}
 	},
 	discordEmoji: {
